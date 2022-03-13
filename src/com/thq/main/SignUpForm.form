@@ -393,6 +393,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="&#x110;&#x102;NG K&#xcd;"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSignUpActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel10">
       <Properties>

@@ -4,12 +4,20 @@
  */
 package com.thq.main;
 
+import com.thq.connectionsql.ConnectionSQL;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import java.sql.PreparedStatement;
+
 /**
  *
  * @author PC
  */
 public class SignUpForm extends javax.swing.JFrame {
-
+    Connection conn = null;
     /**
      * Creates new form SignUpForm
      */
@@ -134,6 +142,11 @@ public class SignUpForm extends javax.swing.JFrame {
         btnSignUp.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         btnSignUp.setForeground(new java.awt.Color(255, 255, 255));
         btnSignUp.setText("ĐĂNG KÍ");
+        btnSignUp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSignUpActionPerformed(evt);
+            }
+        });
 
         jLabel10.setBackground(new java.awt.Color(102, 102, 102));
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -290,9 +303,67 @@ public class SignUpForm extends javax.swing.JFrame {
 
     private void btnSignInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSignInActionPerformed
         // TODO add your handling code here:
-        new SignInForm().setVisible(true);
-        this.dispose();
+        new SignInForm().setVisible(true);//Hien thi form Dang Nhap
+        this.dispose();// Dong form hien tai
     }//GEN-LAST:event_btnSignInActionPerformed
+
+    private void btnSignUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSignUpActionPerformed
+        // TODO add your handling code here:
+        conn = ConnectionSQL.getConnecttionSQL();
+        String gen =null ,date;
+        
+        int dk = JOptionPane.showConfirmDialog(this, "Xác Nhận Đăng Kí?", "Xác Nhận", JOptionPane.YES_NO_OPTION);
+        if (dk != JOptionPane.YES_OPTION){
+            return;
+        }
+        if(jRNam.isSelected()){
+            gen = "Nam";
+        } else if (jRNu.isSelected()){
+            gen = "Nu";
+        } else if (jRKhac.isSelected()){
+            gen = "Khac";
+        }
+        date = String.valueOf(bxDay.getSelectedItem()) +"/"+ String.valueOf(bxMonth.getSelectedItem()) +"/"+ String.valueOf(bxYear.getSelectedItem());
+        
+        
+        if(txtName.getText().equals("")||txtGmail.getText().equals("")||gen.equals("")||txtTK.getText().equals("")||txtMK.getText().equals("")||txtMK2.getText().equals("")){
+            JOptionPane.showMessageDialog(this, "Vui Lòng Điền Đầy Đủ Thông Tin.");
+        } else if(txtMK.getText().equals(txtMK2.getText())){
+            if (cBDongy.isSelected()) {
+                try {
+                    String sql = "INSERT INTO dbo.[User](hoTen,gmail,gioiTinh,dob,taiKhoan,matKhau) VALUES (?,?,?,?,?,?)";
+                    PreparedStatement ps = conn.prepareStatement(sql);
+
+                    ps.setString(1, txtName.getText());
+                    ps.setString(2, txtGmail.getText());
+                    ps.setString(3, gen);
+                    ps.setString(4, date);
+                    ps.setString(5, txtTK.getText());
+                    ps.setString(6, txtMK.getText());
+
+                    int n = ps.executeUpdate();// Update data
+                
+                if (n != 0) {
+                    JOptionPane.showConfirmDialog(this, "Ðăng Ký Thành Công!! Chọn YES để Đăng Nhập.","Chào Mừng!",JOptionPane.YES_NO_OPTION);
+                    if (dk != JOptionPane.YES_OPTION){
+                        new SignInForm().setVisible(true);//Hien thi form Dang Nhap
+                        this.dispose();
+                    }                 
+                } else {
+                    JOptionPane.showMessageDialog(this, "Đăng Ký Thất Bại.");
+                }
+                } catch (SQLException ex) {
+                    Logger.getLogger(SignUpForm.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Vui Lòng Đồng Ý Điều Khoản để Tiếp Tục.");
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Mật Khẩu Xác Nhận Không Chính Xác.");
+        }
+        
+            
+    }//GEN-LAST:event_btnSignUpActionPerformed
 
     /**
      * @param args the command line arguments
