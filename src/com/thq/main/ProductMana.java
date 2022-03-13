@@ -244,6 +244,11 @@ public class ProductMana extends javax.swing.JFrame {
         jMenu3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jMenu3.setName(""); // NOI18N
         jMenu3.setPreferredSize(new java.awt.Dimension(70, 31));
+        jMenu3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu3MouseClicked(evt);
+            }
+        });
         jMenu3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenu3ActionPerformed(evt);
@@ -366,8 +371,12 @@ public class ProductMana extends javax.swing.JFrame {
 
     private void jMenu3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu3ActionPerformed
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(this, "Họ tên Người Thực Hiện: Trần Hoàng Quân\nMSV: 2050531200258\n Project: Quản Lý Sản Phẩm","Giới Thiệu",JOptionPane.PLAIN_MESSAGE);
     }//GEN-LAST:event_jMenu3ActionPerformed
+
+    private void jMenu3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu3MouseClicked
+        // TODO add your handling code here:
+        JOptionPane.showMessageDialog(this, "Họ tên Người Thực Hiện: Trần Hoàng Quân\nMSV: 2050531200258\nProject: Quản Lý Sản Phẩm","Giới Thiệu",JOptionPane.PLAIN_MESSAGE);
+    }//GEN-LAST:event_jMenu3MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

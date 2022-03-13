@@ -271,7 +271,7 @@ public class UpdateProduct extends javax.swing.JFrame {
         TableModel model = UpTable.getModel();
         txtIDPr.setText(String.valueOf(model.getValueAt(i, 0)));
         txtIDCa.setText(String.valueOf(model.getValueAt(i, 1)));
-        txtName.setText(String.valueOf(model.getValueAt(i, 3)));
+        txtName.setText(String.valueOf(model.getValueAt(i, 2)));
         txtGia.setText(String.valueOf(model.getValueAt(i, 4)));
         txtSL.setText(String.valueOf(model.getValueAt(i, 5)));
     }//GEN-LAST:event_UpTableMouseClicked
