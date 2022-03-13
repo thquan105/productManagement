@@ -62,7 +62,7 @@ public class SignUpForm extends javax.swing.JFrame {
         btnSignIn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Đăng Kí");
+        setTitle("Đăng Kí - Product Management");
         setBackground(new java.awt.Color(102, 255, 255));
         setPreferredSize(new java.awt.Dimension(800, 500));
         setSize(new java.awt.Dimension(800, 500));
@@ -310,7 +310,7 @@ public class SignUpForm extends javax.swing.JFrame {
     private void btnSignUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSignUpActionPerformed
         // TODO add your handling code here:
         conn = ConnectionSQL.getConnecttionSQL();
-        String gen =null ,date;
+        String gen = "" ,date;
         
         int dk = JOptionPane.showConfirmDialog(this, "Xác Nhận Đăng Kí?", "Xác Nhận", JOptionPane.YES_NO_OPTION);
         if (dk != JOptionPane.YES_OPTION){
@@ -327,7 +327,7 @@ public class SignUpForm extends javax.swing.JFrame {
         
         
         if(txtName.getText().equals("")||txtGmail.getText().equals("")||gen.equals("")||txtTK.getText().equals("")||txtMK.getText().equals("")||txtMK2.getText().equals("")){
-            JOptionPane.showMessageDialog(this, "Vui Lòng Điền Đầy Đủ Thông Tin.");
+            JOptionPane.showMessageDialog(this, "Hãy Điền Đầy Đủ Thông Tin.");
         } else if(txtMK.getText().equals(txtMK2.getText())){
             if (cBDongy.isSelected()) {
                 try {
@@ -344,7 +344,7 @@ public class SignUpForm extends javax.swing.JFrame {
                     int n = ps.executeUpdate();// Update data
                 
                 if (n != 0) {
-                    JOptionPane.showConfirmDialog(this, "Ðăng Ký Thành Công!! Chọn YES để Đăng Nhập.","Chào Mừng!",JOptionPane.YES_NO_OPTION);
+                    JOptionPane.showConfirmDialog(this, "Ðăng Ký Thành Công!! \nChọn YES để Đăng Nhập.","Chào Mừng!",JOptionPane.YES_NO_OPTION);
                     if (dk != JOptionPane.YES_OPTION){
                         new SignInForm().setVisible(true);//Hien thi form Dang Nhap
                         this.dispose();

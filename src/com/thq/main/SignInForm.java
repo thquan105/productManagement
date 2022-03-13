@@ -4,12 +4,21 @@
  */
 package com.thq.main;
 
+import com.thq.connectionsql.ConnectionSQL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.ResultSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author PC
  */
 public class SignInForm extends javax.swing.JFrame {
-
+    Connection conn = null;
     /**
      * Creates new form SignInForm
      */
@@ -38,7 +47,7 @@ public class SignInForm extends javax.swing.JFrame {
         btnSignUp = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Đăng Nhập");
+        setTitle("Đăng Nhập - Product Management");
         setSize(new java.awt.Dimension(400, 450));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 3, 30)); // NOI18N
@@ -55,6 +64,11 @@ public class SignInForm extends javax.swing.JFrame {
         btnSignIn.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
         btnSignIn.setForeground(new java.awt.Color(255, 255, 255));
         btnSignIn.setText("Đăng Nhập");
+        btnSignIn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSignInActionPerformed(evt);
+            }
+        });
 
         jLabel4.setText("Chưa có Tài Khoản:");
 
@@ -91,15 +105,15 @@ public class SignInForm extends javax.swing.JFrame {
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
-                                        .addComponent(txtTK, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(txtTK))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
-                                        .addComponent(txtMK))))
+                                        .addComponent(txtMK, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGap(19, 19, 19)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(btnSignUp, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -144,6 +158,32 @@ public class SignInForm extends javax.swing.JFrame {
         new SignUpForm().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnSignUpActionPerformed
+
+    private void btnSignInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSignInActionPerformed
+        // TODO add your handling code here:
+        conn = ConnectionSQL.getConnecttionSQL();
+        if(txtTK.getText().equals("")||txtMK.getText().equals("")){
+            JOptionPane.showMessageDialog(this, "Hãy Nhập Tài Khoản và Mật Khẩu.");
+        } else {
+            try {
+                String sql = "SELECT * FROM dbo.[User] WHERE taiKhoan = ? and matKhau = ?";
+                PreparedStatement ps = conn.prepareStatement(sql);
+
+                ps.setString(1, txtTK.getText());
+                ps.setString(2, txtMK.getText());
+                ResultSet rs = ps.executeQuery(); // Tra ve 1 doi tuong SQLServerResultSet
+                
+                if (rs.next()) {
+                    JOptionPane.showMessageDialog(this, "Đăng Nhập Thành Công.");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Đăng Nhập Thất Bại.\nVui Lòng Kiểm Tra Lại Tài Khoản Mật Khẩu.");
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(SignInForm.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+        }
+    }//GEN-LAST:event_btnSignInActionPerformed
 
     /**
      * @param args the command line arguments
