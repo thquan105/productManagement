@@ -39,12 +39,9 @@ public class ProductMana extends javax.swing.JFrame {
         
         for (Product product : list) {
            defaultTableModel.addRow(new Object[]{product.getIdProduct(),product.getIdCategory(),product.getNameProduct(),product.getNameCategory(),product.getPrice(),product.getAmount()});
-        }
-        
-        
-        
-        
+        }   
     }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -120,6 +117,11 @@ public class ProductMana extends javax.swing.JFrame {
         btnDel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnDel.setMargin(new java.awt.Insets(2, 25, 2, 25));
         btnDel.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnDel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDelActionPerformed(evt);
+            }
+        });
         jToolBar1.add(btnDel);
 
         btnLO.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/logout-icon.png"))); // NOI18N
@@ -209,6 +211,11 @@ public class ProductMana extends javax.swing.JFrame {
         itemUp.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         itemUp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/update.png"))); // NOI18N
         itemUp.setText("Update");
+        itemUp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemUpActionPerformed(evt);
+            }
+        });
         jMenu2.add(itemUp);
 
         jMenuBar1.add(jMenu2);
@@ -257,7 +264,8 @@ public class ProductMana extends javax.swing.JFrame {
 
     private void btnUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpActionPerformed
         // TODO add your handling code here:
-        
+        new UpdateProduct().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnUpActionPerformed
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
@@ -287,6 +295,17 @@ public class ProductMana extends javax.swing.JFrame {
         new AddProduct().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_itemAddActionPerformed
+
+    private void itemUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemUpActionPerformed
+        // TODO add your handling code here:
+        new UpdateProduct().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_itemUpActionPerformed
+
+    private void btnDelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDelActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_btnDelActionPerformed
 
     /**
      * @param args the command line arguments

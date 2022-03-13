@@ -175,7 +175,7 @@ public class SignInForm extends javax.swing.JFrame {
                 
                 if (rs.next()) {
                     JOptionPane.showMessageDialog(this, "Đăng Nhập Thành Công.");
-                    new ProductMana().setVisible(true);//Hien thi form Dang Nhap
+                    new ProductMana().setVisible(true);//Hien thi SanPham
                     this.dispose();
                 } else {
                     JOptionPane.showMessageDialog(this, "Đăng Nhập Thất Bại.\nVui Lòng Kiểm Tra Lại Tài Khoản Mật Khẩu.");
