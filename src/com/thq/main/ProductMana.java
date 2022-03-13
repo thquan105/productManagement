@@ -61,6 +61,7 @@ public class ProductMana extends javax.swing.JFrame {
         btnUp = new javax.swing.JButton();
         btnDel = new javax.swing.JButton();
         btnLO = new javax.swing.JButton();
+        btnQuit = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         productTable = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -74,8 +75,10 @@ public class ProductMana extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("PRODUCT");
-        setPreferredSize(new java.awt.Dimension(800, 500));
-        setSize(new java.awt.Dimension(800, 500));
+        setMinimumSize(new java.awt.Dimension(800, 600));
+        setPreferredSize(new java.awt.Dimension(800, 600));
+        setResizable(false);
+        setSize(new java.awt.Dimension(800, 600));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -127,7 +130,25 @@ public class ProductMana extends javax.swing.JFrame {
         btnLO.setMargin(new java.awt.Insets(2, 25, 2, 25));
         btnLO.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         btnLO.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnLO.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLOActionPerformed(evt);
+            }
+        });
         jToolBar1.add(btnLO);
+
+        btnQuit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/Quit.png"))); // NOI18N
+        btnQuit.setText("Quit");
+        btnQuit.setFocusable(false);
+        btnQuit.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnQuit.setMargin(new java.awt.Insets(2, 20, 2, 20));
+        btnQuit.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnQuit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnQuitActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnQuit);
 
         productTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -156,11 +177,21 @@ public class ProductMana extends javax.swing.JFrame {
         itemAdd.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         itemAdd.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/new.png"))); // NOI18N
         itemAdd.setText("Add Product");
+        itemAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemAddActionPerformed(evt);
+            }
+        });
         jMenu1.add(itemAdd);
 
         itemQuit.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.ALT_DOWN_MASK));
         itemQuit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/exit.png"))); // NOI18N
         itemQuit.setText("Quit");
+        itemQuit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itemQuitActionPerformed(evt);
+            }
+        });
         jMenu1.add(itemQuit);
 
         jMenuBar1.add(jMenu1);
@@ -194,27 +225,31 @@ public class ProductMana extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1)
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
-                .addGap(166, 166, 166)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 444, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(190, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(166, 166, 166)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 444, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 732, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 66, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
+                .addGap(36, 36, 36)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(36, 36, 36))
+                .addGap(29, 29, 29))
         );
 
         pack();
@@ -227,7 +262,31 @@ public class ProductMana extends javax.swing.JFrame {
 
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
         // TODO add your handling code here:
+        new AddProduct().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnAddActionPerformed
+
+    private void itemQuitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemQuitActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_itemQuitActionPerformed
+
+    private void btnLOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLOActionPerformed
+        // TODO add your handling code here:
+        new DisplayMain().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnLOActionPerformed
+
+    private void btnQuitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuitActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_btnQuitActionPerformed
+
+    private void itemAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itemAddActionPerformed
+        // TODO add your handling code here:
+        new AddProduct().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_itemAddActionPerformed
 
     /**
      * @param args the command line arguments
@@ -269,6 +328,7 @@ public class ProductMana extends javax.swing.JFrame {
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnDel;
     private javax.swing.JButton btnLO;
+    private javax.swing.JButton btnQuit;
     private javax.swing.JButton btnUp;
     private javax.swing.JMenuItem itemAdd;
     private javax.swing.JMenuItem itemDel;

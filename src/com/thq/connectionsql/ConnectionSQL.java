@@ -28,13 +28,13 @@ public class ConnectionSQL {
         }       
         return null;       
     }
-    public static void main(String[] args) {
-        Connection conn = getConnecttionSQL();
+    //public static void main(String[] args) {
+    //    Connection conn = getConnecttionSQL();
         
         //if(conn != null)
         //    System.out.println("Thanh Cong");
         //else
         //   System.out.println("That Bai");
-    }
+    //}
     
 }
