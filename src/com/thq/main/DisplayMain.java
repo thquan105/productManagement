@@ -35,7 +35,7 @@ public class DisplayMain extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Product Management");
         setAlwaysOnTop(true);
-        setBackground(new java.awt.Color(51, 153, 255));
+        setBackground(new java.awt.Color(51, 197, 245));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setPreferredSize(new java.awt.Dimension(800, 500));
         setSize(new java.awt.Dimension(800, 500));
@@ -44,7 +44,9 @@ public class DisplayMain extends javax.swing.JFrame {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("PRODUCT MANAGEMENT");
 
+        btnsignup.setBackground(new java.awt.Color(0, 255, 51));
         btnsignup.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        btnsignup.setForeground(new java.awt.Color(255, 255, 255));
         btnsignup.setText("ĐĂNG KÍ");
         btnsignup.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -52,7 +54,9 @@ public class DisplayMain extends javax.swing.JFrame {
             }
         });
 
+        btnsignin.setBackground(new java.awt.Color(0, 153, 255));
         btnsignin.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        btnsignin.setForeground(new java.awt.Color(0, 0, 0));
         btnsignin.setText("ĐĂNG NHẬP");
         btnsignin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -62,6 +66,7 @@ public class DisplayMain extends javax.swing.JFrame {
 
         jLabel2.setBackground(new java.awt.Color(102, 102, 102));
         jLabel2.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(102, 102, 102));
         jLabel2.setText("Product Management giúp bạn quản lí dữ liệu về sản phẩm một cách hiệu quả.");
         jLabel2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 

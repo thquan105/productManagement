@@ -8,7 +8,9 @@ import com.thq.connectionsql.ConnectionSQL;
 import com.thq.connectionsql.DAO;
 import com.thq.product.Product;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -41,7 +43,16 @@ public class ProductMana extends javax.swing.JFrame {
            defaultTableModel.addRow(new Object[]{product.getIdProduct(),product.getIdCategory(),product.getNameProduct(),product.getNameCategory(),product.getPrice(),product.getAmount()});
         }   
     }
+    public void Reload(){
+        DAO Product = new DAO();
+        DefaultTableModel model = (DefaultTableModel) productTable.getModel();
+        model.setRowCount(0);
+        List<Product> list = Product.getAllProduct();
 
+        for (Product product : list) {
+           model.addRow(new Object[]{product.getIdProduct(),product.getIdCategory(),product.getNameProduct(),product.getNameCategory(),product.getPrice(),product.getAmount()});
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -57,6 +68,7 @@ public class ProductMana extends javax.swing.JFrame {
         btnAdd = new javax.swing.JButton();
         btnUp = new javax.swing.JButton();
         btnDel = new javax.swing.JButton();
+        btnRe = new javax.swing.JButton();
         btnLO = new javax.swing.JButton();
         btnQuit = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -66,7 +78,6 @@ public class ProductMana extends javax.swing.JFrame {
         itemAdd = new javax.swing.JMenuItem();
         itemQuit = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
-        itemDel = new javax.swing.JMenuItem();
         itemUp = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
 
@@ -123,6 +134,19 @@ public class ProductMana extends javax.swing.JFrame {
             }
         });
         jToolBar1.add(btnDel);
+
+        btnRe.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/Reload.png"))); // NOI18N
+        btnRe.setText("Refresh");
+        btnRe.setFocusable(false);
+        btnRe.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnRe.setMargin(new java.awt.Insets(2, 25, 2, 25));
+        btnRe.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnRe.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnRe);
 
         btnLO.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/logout-icon.png"))); // NOI18N
         btnLO.setText("LogOut");
@@ -204,10 +228,6 @@ public class ProductMana extends javax.swing.JFrame {
         jMenu2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jMenu2.setPreferredSize(new java.awt.Dimension(60, 22));
 
-        itemDel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/del.png"))); // NOI18N
-        itemDel.setText("Delete");
-        jMenu2.add(itemDel);
-
         itemUp.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         itemUp.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/update.png"))); // NOI18N
         itemUp.setText("Update");
@@ -224,6 +244,11 @@ public class ProductMana extends javax.swing.JFrame {
         jMenu3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jMenu3.setName(""); // NOI18N
         jMenu3.setPreferredSize(new java.awt.Dimension(70, 31));
+        jMenu3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu3ActionPerformed(evt);
+            }
+        });
         jMenuBar1.add(jMenu3);
 
         setJMenuBar(jMenuBar1);
@@ -304,53 +329,55 @@ public class ProductMana extends javax.swing.JFrame {
 
     private void btnDelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDelActionPerformed
         // TODO add your handling code here:
-        
+        int row = productTable.getSelectedRow();
+        if (row == -1){
+            JOptionPane.showMessageDialog(this, "Vui Lòng chọn Sản Phẩm.","Lỗi",JOptionPane.ERROR_MESSAGE);
+        } else {
+            int confirm = JOptionPane.showConfirmDialog(this, "Bạn Chắc Chắn Muốn Xóa?","Confirm",JOptionPane.YES_NO_OPTION);
+            if (confirm == JOptionPane.YES_OPTION) {
+                String idPro = String.valueOf(productTable.getValueAt(row, 0));
+                try {
+                    conn = ConnectionSQL.getConnecttionSQL();
+                    String sql = "DELETE FROM dbo.[Product] WHERE idProduct = '" + idPro + "'";
+                    PreparedStatement ps = conn.prepareStatement(sql);
+                    int n = ps.executeUpdate();
+
+                    if (n != 0) {
+                        JOptionPane.showMessageDialog(this, "Đã Xóa Thành Công!");
+                        Reload();
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Xóa Thất Bại!");
+                    }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+                
+            } else {
+                return;
+            }
+        }
     }//GEN-LAST:event_btnDelActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ProductMana.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ProductMana.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ProductMana.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ProductMana.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
+    private void btnReActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReActionPerformed
+        // TODO add your handling code here:
+        Reload();
+    }//GEN-LAST:event_btnReActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new ProductMana().setVisible(true);
-            }
-        });
-    }
+    private void jMenu3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu3ActionPerformed
+        // TODO add your handling code here:
+        JOptionPane.showMessageDialog(this, "Họ tên Người Thực Hiện: Trần Hoàng Quân\nMSV: 2050531200258\n Project: Quản Lý Sản Phẩm","Giới Thiệu",JOptionPane.PLAIN_MESSAGE);
+    }//GEN-LAST:event_jMenu3ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnDel;
     private javax.swing.JButton btnLO;
     private javax.swing.JButton btnQuit;
+    private javax.swing.JButton btnRe;
     private javax.swing.JButton btnUp;
     private javax.swing.JMenuItem itemAdd;
-    private javax.swing.JMenuItem itemDel;
     private javax.swing.JMenuItem itemQuit;
     private javax.swing.JMenuItem itemUp;
     private javax.swing.JLabel jLabel1;
